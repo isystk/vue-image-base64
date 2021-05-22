@@ -28,40 +28,52 @@ yarn add -D vue-image-base64
 ```bash
 git clone https://github.com/isystk/vue-image-base64.git
 cd vue-image-base64
-yarn run start
+yarn run serve
 ```
  
 # Note
 
 ```
-  const [images, setImages] = useState({data: []});
-  const [errors, setErrors] = useState([]);
+<template>
+  <VueImageBase64 
+    :maxFileSize="10485760"
+    :thumbnailSize="100"
+    :drop="true"
+    dropText="ファイルをドラッグ＆ドロップもしくは"
+    capture="environment"
+    :multiple="true"
+    @handleChange="handleChange"
+  />
+</template>
 
-  return (
-    <div>
-      <vueImageBase64
-        maxFileSize={10485760}
-        thumbnail_size={100}
-        drop={true}
-        dropText="ファイルをドラッグ＆ドロップもしくは"
-        capture="environment"
-        multiple={true}
-        handleChange={data => {
-          if (data.result) {
-            let list =images.data
-            list.push(data);
-            setImages({data: list})
-          } else {
-            setErrors([...errors, data.messages]);
-          }
-        }}
-      />
-      { errors.map((error, index) => 
-          <p className="error-message" key={index}>{error}</p>
-        )
+<script>
+import VueImageBase64 from './components/VueImageBase64.vue'
+
+export default {
+  name: 'App',
+  components: {
+    VueImageBase64
+  },
+  data () {
+    return {
+      images: {data: []},
+      errors: []
+    }
+  },
+  methods: {
+    handleChange: function(data) {
+      console.log(data);
+      if (data.result) {
+        let list =this.images.data
+        list.push(data);
+        this.images = {data: list}
+      } else {
+        this.errors = data.messages;
       }
-    </div>
-  )
+    }
+  }
+}
+</script>
 ```
  
 # Author

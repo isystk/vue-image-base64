@@ -2,10 +2,12 @@
   "name": "vue-image-base64",
   "version": "0.1.0",
   "description": "画像ファイルをBase64に変換するVue.js用コンポーネントです",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy-demo": "gh-pages -d dist"
   },
   "main": "./dist/index.js",
   "author": "isystk",

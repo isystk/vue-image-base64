@@ -1,12 +1,32 @@
 <template>
-  <input
-    type="file"
-    :id="id"
-    :accept="accept"
-    :capture="capture"
-    :multiple="multiple"
-    v-on:change="handleFileChange"
-  />
+  <div v-if="drop">
+    <div id="drop-zone" 
+      :class="[isHover ? 'hover': '']"
+      @dragover="handleDragEnter"
+      @dragleave="handleDragLeave"
+      @drop="handleDrop"
+    >
+      <p>{{dropText}}</p>
+      <input
+        type="file"
+        :id="id"
+        :accept="accept"
+        :capture="capture"
+        :multiple="multiple"
+        v-on:change="handleFileChange"
+      />
+    </div>
+  </div>
+  <div v-else>
+    <input
+      type="file"
+      :id="id"
+      :accept="accept"
+      :capture="capture"
+      :multiple="multiple"
+      v-on:change="handleFileChange"
+    />
+  </div>
 </template>
 
 <script>
@@ -83,12 +103,12 @@ export default {
             })
             .then(function(rb) {
               const resultBlob = rb;
-              const errors = this.validate(resultBlob)
+              const errors = self.validate(resultBlob)
               if (0 < errors.length) {
                 this.errorCallback(errors)
                 return
               }
-              this.resize(
+              self.resize(
                 file.name,
                 resultBlob,
                 function(res) {
