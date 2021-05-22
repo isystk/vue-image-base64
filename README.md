@@ -20,7 +20,7 @@ https://isystk.github.io/vue-image-base64
 # Installation
  
 ```bash
-yarn add -D vue-image-base64
+yarn add -D vuejs-image-base64
 ```
  
 # Usage
@@ -28,7 +28,14 @@ yarn add -D vue-image-base64
 ```bash
 git clone https://github.com/isystk/vue-image-base64.git
 cd vue-image-base64
+# 開発用に起動する
 yarn run serve
+# GitHubPage用にビルドする
+yarn run build
+# GitHubPageに公開
+yarn run deploy-demo
+# npmに公開するライブラリを生成する
+yarn run build-bundle
 ```
  
 # Note
@@ -47,7 +54,7 @@ yarn run serve
 </template>
 
 <script>
-import VueImageBase64 from './components/VueImageBase64.vue'
+import VueImageBase64 from 'vuejs-image-base64'
 
 export default {
   name: 'App',
