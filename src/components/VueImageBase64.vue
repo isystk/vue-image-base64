@@ -1,37 +1,35 @@
 <template>
   <div v-if="drop">
-    <div id="drop-zone" 
-      :class="[isHover ? 'hover': '']"
-      @dragover="handleDragEnter"
-      @dragleave="handleDragLeave"
-      @drop="handleDrop"
+    <div id="drop-zone"
+         :class="[isHover ? 'hover': '']"
+         @dragover="handleDragEnter"
+         @dragleave="handleDragLeave"
+         @drop="handleDrop"
     >
       <p>{{dropText}}</p>
       <input
-        type="file"
-        :id="id"
-        :accept="accept"
-        :capture="capture"
-        :multiple="multiple"
-        v-on:change="handleFileChange"
+          type="file"
+          :id="id"
+          :accept="accept"
+          :capture="capture"
+          :multiple="multiple"
+          @change="handleFileChange"
       />
     </div>
   </div>
   <div v-else>
     <input
-      type="file"
-      :id="id"
-      :accept="accept"
-      :capture="capture"
-      :multiple="multiple"
-      v-on:change="handleFileChange"
+        type="file"
+        :id="id"
+        :accept="accept"
+        :capture="capture"
+        :multiple="multiple"
+        @change="handleFileChange"
     />
   </div>
 </template>
 
 <script>
-import heic2any from "heic2any";
-
 export default {
   data () {
     return {
@@ -80,71 +78,60 @@ export default {
       default  : undefined
     }
   },
-  created() {
-  },
-  computed: {
-  },
   methods: {
-
     // ファイル選択時のハンドラー
     handleFileChange: function(e) {
       const self = this;
       for (let file of e.target.files) {
         const ext = this.getExt(file.name).toLowerCase()
-
         if (ext === 'heic') {
           // HEIC対応 iphone11 以降で撮影された画像にも対応する
           // console.log('HEIC形式の画像なのでJPEGに変換します。')
-
-          heic2any({
-              blob: file,
+          const heic2any = require('heic2any');
+          if (typeof window !== 'undefined') {
+            fetch('https://alexcorvi.github.io/heic2any/demo/14.heic')
+            .then((res) => res.blob())
+            .then((blob) => heic2any({
+              blob,
               toType: 'image/jpeg',
               quality: 1,
             })
-            .then(function(rb) {
+            .then(function (rb) {
               const resultBlob = rb;
-              const errors = self.validate(resultBlob)
+              const errors = self.validate(resultBlob);
               if (0 < errors.length) {
-                this.errorCallback(errors)
-                return
+                self.errorCallback(errors);
+                return;
               }
-              self.resize(
-                file.name,
-                resultBlob,
-                function(res) {
-                  res.fileName = file.name
-                  self.successCallback({
-                    ...res,
-                    result: true, 
-                    messages: ['正常終了'],
-                  })
-                },
-                function(errors) {
-                  self.errorCallback(errors)
-                  return
-                },
-              )
-            })
+              self.resize(file.name, resultBlob, function (res) {
+                res.fileName = file.name;
+                self.successCallback(Object.assign(Object.assign({}, res), { result: true, messages: ['正常終了'] }));
+              }, function (errors) {
+                self.errorCallback(errors);
+                return;
+              });
+            }));
+          }
         } else {
-          const errors = this.validate(file)
+          const errors = self.validate(file)
           if (0 < errors.length) {
             this.errorCallback(errors)
             return
           }
-          this.resize(
-            file.name,
-            file,
-            function(res) {
-              self.successCallback({
-                ...res,
-                result: true, 
-                messages: ['正常終了'],
-              })
-            },
-            function(errors) {
-              self.errorCallback(errors)
-              return
-            },
+          self.resize(
+              file.name,
+              file,
+              function(res) {
+                self.successCallback({
+                  ...res,
+                  result: true,
+                  messages: ['正常終了'],
+                })
+              },
+              function(errors) {
+                self.errorCallback(errors)
+                return
+              },
           )
         }
       }
@@ -201,7 +188,6 @@ export default {
             // canvasにサムネイルを描画
             ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height)
           }
-
           // canvasからbase64画像データを取得
           const base64 = canvas.toDataURL('image/jpeg')
           // base64からBlobデータを作成
@@ -260,4 +246,3 @@ export default {
   }
 }
 </script>
-

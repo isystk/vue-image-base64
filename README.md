@@ -29,13 +29,13 @@ yarn add -D vuejs-image-base64
 git clone https://github.com/isystk/vue-image-base64.git
 cd vue-image-base64
 # 開発用に起動する
-yarn run serve
+yarn serve
 # GitHubPage用にビルドする
-yarn run build
+yarn build
 # GitHubPageに公開
-yarn run deploy-demo
+yarn deploy-demo
 # npmに公開するライブラリを生成する
-yarn run build-bundle
+yarn build-bundle
 ```
  
 # Note

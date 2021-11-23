@@ -21,6 +21,7 @@
               :drop="true"
               dropText="ファイルをドラッグ＆ドロップもしくは"
               capture="environment"
+              accept="*"
               :multiple="true"
               @handleChange="handleChange"
             />
