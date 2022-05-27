@@ -2,7 +2,7 @@
   <div class="wrap">
     <header>
       <div class="header-image">
-        <div class="logo">VUE3 IMAGE BASE64</div>
+        <div class="logo">VUE IMAGE BASE64</div>
       </div>
     </header>
     <div class="content">
@@ -15,7 +15,7 @@
           </div>
           <div class="entry-content">
             <h2>デモ</h2>
-            <Vue3ImageBase64
+            <VueImageBase64
               :maxFileSize="10485760"
               :thumbnailSize="100"
               :drop="true"
@@ -58,7 +58,7 @@
 
 
 <script type="ts" setup>
-import Vue3ImageBase64 from '@/vue-image-base64.vue';
+import VueImageBase64 from '@/vue-image-base64.vue';
 import {reactive} from "vue";
 
 const store = reactive({

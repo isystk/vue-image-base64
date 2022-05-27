@@ -32,7 +32,6 @@ cd vue-image-base64
 yarn serve
 # GitHubPageに公開
 yarn build
-npm install gh-pages -g
 yarn deploy-demo
 # npmに公開する
 yarn build-bundle 

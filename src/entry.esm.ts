@@ -15,7 +15,7 @@ export default /*#__PURE__*/((): InstallableComponent => {
 
   // Attach install function executed by Vue.use()
   installable.install = (app: App) => {
-    app.component('Vue3ImageBase64', installable);
+    app.component('VueImageBase64', installable);
   };
   return installable;
 })();

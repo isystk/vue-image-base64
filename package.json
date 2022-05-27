@@ -36,7 +36,8 @@
     "build-bundle:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build-bundle:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build-bundle:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
-    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
+    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts",
+    "deploy-demo": "gh-pages -d dist"
   },
   "dependencies": {
     "heic2any": "^0.0.3"
@@ -56,6 +57,7 @@
     "@vue/compiler-sfc": "^3.0.11",
     "@zerollup/ts-transform-paths": "^1.7.18",
     "cross-env": "^7.0.3",
+    "gh-pages": "^4.0.0",
     "minimist": "^1.2.5",
     "postcss": "^8.2.10",
     "rimraf": "^3.0.2",
@@ -64,7 +66,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.30.0",
     "rollup-plugin-vue": "^6.0.0",
-    "ttypescript": "^1.5.12",
+    "sass": "^1.52.1",
+    "sass-loader": "10",
     "typescript": "^4.0.3",
     "vue": "^3.0.5"
   },
