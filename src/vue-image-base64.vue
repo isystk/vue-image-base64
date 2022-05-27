@@ -90,27 +90,27 @@ export default {
           const heic2any = require('heic2any');
           if (typeof window !== 'undefined') {
             fetch('https://alexcorvi.github.io/heic2any/demo/14.heic')
-            .then((res) => res.blob())
-            .then((blob) => heic2any({
-              blob,
-              toType: 'image/jpeg',
-              quality: 1,
-            })
-            .then(function (rb) {
-              const resultBlob = rb;
-              const errors = self.validate(resultBlob);
-              if (0 < errors.length) {
-                self.errorCallback(errors);
-                return;
-              }
-              self.resize(file.name, resultBlob, function (res) {
-                res.fileName = file.name;
-                self.successCallback(Object.assign(Object.assign({}, res), { result: true, messages: ['正常終了'] }));
-              }, function (errors) {
-                self.errorCallback(errors);
-                return;
-              });
-            }));
+                .then((res) => res.blob())
+                .then((blob) => heic2any({
+                  blob,
+                  toType: 'image/jpeg',
+                  quality: 1,
+                })
+                    .then(function (rb) {
+                      const resultBlob = rb;
+                      const errors = self.validate(resultBlob);
+                      if (0 < errors.length) {
+                        self.errorCallback(errors);
+                        return;
+                      }
+                      self.resize(file.name, resultBlob, function (res) {
+                        res.fileName = file.name;
+                        self.successCallback(Object.assign(Object.assign({}, res), { result: true, messages: ['正常終了'] }));
+                      }, function (errors) {
+                        self.errorCallback(errors);
+                        return;
+                      });
+                    }));
           }
         } else {
           const errors = self.validate(file)

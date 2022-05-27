@@ -30,12 +30,14 @@ git clone https://github.com/isystk/vue-image-base64.git
 cd vue-image-base64
 # 開発用に起動する
 yarn serve
-# GitHubPage用にビルドする
-yarn build
 # GitHubPageに公開
+yarn build
+npm install gh-pages -g
 yarn deploy-demo
-# npmに公開するライブラリを生成する
-yarn build-bundle
+# npmに公開する
+yarn build-bundle 
+npm login
+npm publish
 ```
  
 # Note
@@ -53,31 +55,22 @@ yarn build-bundle
   />
 </template>
 
-<script>
+<script setup>
 import VueImageBase64 from 'vuejs-image-base64'
+import {reactive} from "vue";
 
-export default {
-  name: 'App',
-  components: {
-    VueImageBase64
-  },
-  data () {
-    return {
-      images: {data: []},
-      errors: []
-    }
-  },
-  methods: {
-    handleChange: function(data) {
-      console.log(data);
-      if (data.result) {
-        let list =this.images.data
-        list.push(data);
-        this.images = {data: list}
-      } else {
-        this.errors = data.messages;
-      }
-    }
+const store = reactive({
+  images: {data: []},
+  errors: []
+})
+
+const handleChange = function(data) {
+  if (data.result) {
+    let list =store.images.data
+    list.push(data);
+    store.images = {data: list}
+  } else {
+    store.errors = data.messages;
   }
 }
 </script>

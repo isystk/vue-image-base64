@@ -1,52 +1,77 @@
 {
   "name": "vuejs-image-base64",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "画像ファイルをBase64に変換するVue.js用コンポーネントです",
-  "private": false,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "deploy-demo": "gh-pages -d dist",
-    "build-bundle": "vue-cli-service build --target lib --name vue-image-base64 ./src/library-main.js"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:isystk/vue-image-base64.git"
   },
-  "main": "dist/vue-image-base64.common.js",
-  "unpkg": "./dist/vue-image-base64.umd.min.js",
-  "jsdelivr": "./dist/vue-image-base64.umd.min.js",
+  "keywords": [
+    "vue",
+    "image",
+    "base64"
+  ],
   "author": "isystk",
   "license": "MIT",
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "css-loader": "^5.2.5",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11",
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+  "bugs": {
+    "url": "https://github.com/isystk/vue-image-base64/issues"
+  },
+  "homepage": "https://github.com/isystk/vue-image-base64#readme",
+  "main": "dist/vue-image-base64.ssr.js",
+  "browser": "dist/vue-image-base64.esm.js",
+  "module": "dist/vue-image-base64.esm.js",
+  "unpkg": "dist/vue-image-base64.min.js",
+  "types": "dist/types/src/entry.esm.d.ts",
+  "files": [
+    "dist/*",
+    "src/**/*.vue"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "serve": "vue-cli-service serve dev/serve.ts",
+    "build": "vue-cli-service build dev/serve.ts",
+    "lint": "vue-cli-service lint dev/serve.ts",
+    "prebuild": "rimraf ./dist",
+    "build-bundle": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build-bundle:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build-bundle:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build-bundle:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
   },
   "dependencies": {
-    "heic2any": "0.0.3"
+    "heic2any": "^0.0.3"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@rollup/plugin-alias": "^3.1.2",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-typescript": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/compiler-sfc": "^3.0.11",
+    "@zerollup/ts-transform-paths": "^1.7.18",
+    "cross-env": "^7.0.3",
+    "minimist": "^1.2.5",
+    "postcss": "^8.2.10",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.52.8",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.0.3",
+    "vue": "^3.0.5"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  "peerDependencies": {
+    "vue": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=12"
+  }
 }
