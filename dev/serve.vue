@@ -2,7 +2,7 @@
   <div class="wrap">
     <header>
       <div class="header-image">
-        <div class="logo">VUE IMAGE BASE64</div>
+        <div class="logo">VUE3 IMAGE BASE64</div>
       </div>
     </header>
     <div class="content">
@@ -15,7 +15,7 @@
           </div>
           <div class="entry-content">
             <h2>デモ</h2>
-            <VueImageBase64 
+            <Vue3ImageBase64
               :maxFileSize="10485760"
               :thumbnailSize="100"
               :drop="true"
@@ -38,7 +38,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="image in images.data" :key="image.fileName">
+                    <tr v-for="image in store.images.data" :key="image.fileName">
                       <td>{{image.fileName}}</td>
                       <td><img :src="image.ofileData" /></td>
                       <td><img :src="image.fileData" /></td>
@@ -57,34 +57,22 @@
 </template>
 
 
-<script>
-import VueImageBase64 from './components/VueImageBase64.vue'
+<script type="ts" setup>
+import Vue3ImageBase64 from '@/vue-image-base64.vue';
+import {reactive} from "vue";
 
-export default {
-  name: 'App',
-  components: {
-    VueImageBase64
-  },
-  data () {
-    return {
-      images: {data: []},
-      errors: []
-    }
-  },
-  methods: {
-    handleChange: function(data) {
-      console.log(data);
-      if (data.result) {
-        let list =this.images.data
-        list.push(data);
-        this.images = {data: list}
-      } else {
-        this.errors = data.messages;
-      }
-    }
+const store = reactive({
+  images: {data: []},
+  errors: []
+})
+
+const handleChange = function(data) {
+  if (data.result) {
+    let list =store.images.data
+    list.push(data);
+    store.images = {data: list}
+  } else {
+    store.errors = data.messages;
   }
 }
 </script>
-
-<style>
-</style>
